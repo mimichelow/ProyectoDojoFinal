@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mezenger | Register | Login</title>
+    <title>WhatsDown | Register | Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,16 +11,16 @@
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body data-bs-theme="light">
-    <nav class="navbar navbar-expand-lg sticky-top navbar-dark"style="background-color:#362FD9;" >
+    <nav class="navbar navbar-expand-lg sticky-top navbar-dark"style="background-color:#5B2F91;" >
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="#" style="color:#EEEEEE;">Mezenger</a>
+            <a class="navbar-brand fw-bold " href="#" style="color:#EEEEEE;"><img src="../static/img/logo-purple.png" style="width:40px" class="me-2">WhatsDown</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse  " id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item ">
-                        <a class="nav-link " aria-current="page" href="{{url_for('chats')}}" >Home</a>
+                        <a class="nav-link " aria-current="page" href="{{url_for('chats_dashboard')}}" >Home</a>
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link mb-0 " href="{{url_for('profile')}}">My Profile</a>
@@ -57,7 +57,7 @@
                         <label for="pswrd_confirm" class="form-label mt-2">Confirm Password:</label>
                         <input name="pswrd_confirm" class="form-control" type="password">
                         <div class="d-grid gap-2 col-8 mx-auto">
-                            <input class="btn  mt-4 mb-4" type="submit" value="Register" style="background-color:#362FD9; color:#EEEEEE;">
+                            <input class="btn  mt-4 mb-4" type="submit" value="Register" style="background-color:#5B2F91; color:#EEEEEE;">
                         </div>
                     </form>
                 </div>
@@ -73,7 +73,7 @@
                         <label for="pswrd" class="form-label mt-2">Password:</label>
                         <input name="pswrd" class="form-control" type="password">
                         <div class="d-grid gap-2 col-8 mx-auto">
-                            <input class="btn  mt-4 mb-4" type="submit" value="Login" style="background-color:#362FD9; color:#EEEEEE;">
+                            <input class="btn  mt-4 mb-4" type="submit" value="Login" style="background-color:#5B2F91; color:#EEEEEE;">
                         </div>
                     </form>
                 </div>
