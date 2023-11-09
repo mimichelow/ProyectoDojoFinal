@@ -1,0 +1,15 @@
+body{
+    font-family: 'Roboto', sans-serif;
+}
+
+.chats{
+    height:80vh;
+    width: 750px;
+}
+.chat-box{
+    height:10vh;
+    border-color:#362FD9 !important;
+}
+.chat-box:hover{
+    background-color: #cfcdcd;
+}
