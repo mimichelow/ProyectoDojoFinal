@@ -1,0 +1,78 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    color: #495057;
+}
+
+.chats {
+    height: 80vh;
+    width: 750px;
+}
+
+.chat-box {
+    height: 10vh;
+    border-color: #5B2F91 !important;
+}
+
+.chat-box:hover {
+    background-color: #cfcdcd;
+}
+
+.chat-view-container {
+    max-width: 750px;
+    margin: auto;
+    padding: 20px;
+    background-color: #e2e3e5;
+    border-radius: 15px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.receiver-info {
+    display: flex;
+    align-items: center;
+}
+
+.receiver-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.receiver-info h2 {
+    color: #5B2F91;
+}
+
+.conversation-history {
+    margin-top: 20px;
+}
+
+.message {
+    margin-bottom: 10px;
+}
+
+.type-message-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.message-input {
+    flex-grow: 1;
+    margin-right: 15px;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+
+.send-button {
+    width: 100px;
+}
+
+.reaction-icon {
+    font-size: 24px;
+    color: #ccc; /* Grey by default */
+    cursor: pointer;
+}
