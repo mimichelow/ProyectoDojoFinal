@@ -5,6 +5,7 @@ body{
 .chats{
     height:80vh;
     width: 750px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 .chat-box{
     height:10vh;
@@ -12,4 +13,7 @@ body{
 }
 .chat-box:hover{
     background-color: #cfcdcd;
+}
+.box{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }

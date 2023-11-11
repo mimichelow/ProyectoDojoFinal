@@ -42,8 +42,8 @@
                     {% endif %}
                 {% endwith %}
             </div>
-            <div class="col-5 rounded bg-secondary-subtle" >
-                <h1 class="mt-3" style="color:#F99417;"> Register </h1>
+            <div class="col-5 rounded bg-secondary-subtle box" >
+                <h1 class="mt-3 " style="color:#F99417;"> Register </h1>
                 <div class="container col-10 text-start mt-4">
                     <form action="{{url_for('signup')}}" method="post">
                         <label for="fname" class="form-label mt-2">First Name:</label>
@@ -64,7 +64,7 @@
             </div>
         
 
-            <div class="col-5 bg-secondary-subtle rounded">
+            <div class="col-5 bg-secondary-subtle rounded box">
                 <h1 class="mt-3" style="color:#F99417;">Login</h1>
                 <div class="container col-10 text-start mt-4">
                     <form action="{{url_for('signin')}}" method="post">
