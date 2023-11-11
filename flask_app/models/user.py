@@ -27,9 +27,25 @@ class User:
             return None
 
     @classmethod
-    def login(cls,email,password):
-        pass
+    def check_login(cls, email, password):
+        query = "SELECT id, email, password FROM users LEFT JOIN logins ON users.id = logins.user_id WHERE email = %(email)s;"
+        data = {"email": email}
+        result = connectToMySQL().query_db(query, data)
+        if result and Bcrypt().check_password_hash(result[0]['password'], password):
+            return result[0]['id']
+        else:
+            return None
         
+    @classmethod
+    def create_login(cls, id, email, password):
+        query = "INSERT INTO logins (email, password, user_id) VALUES (%(email)s, %(password)s, %(user_id)s);"
+        data = {
+            "email": email,
+            "password": Bcrypt().generate_password_hash(password),
+            "user_id": id
+        }
+        return connectToMySQL().query_db(query, data)
+    
     def save(self):
         query = "INSERT INTO users (fname, lname, nick, email, picture) VALUES (%(fname)s, %(lname)s, %(nick)s, %(email)s, %(picture)s);"
         data = {
