@@ -19,13 +19,13 @@ body {
 }
 
 .chat-view-container {
-    max-width: 750px;
+    max-width: 750px ;
     margin: auto;
     padding: 20px;
-    background-color: #e2e3e5;
+    background-color: #e2e3e5 ;
     border-radius: 15px;
     margin-top: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) ;
 }
 
 .receiver-info {
@@ -75,4 +75,20 @@ body {
     font-size: 24px;
     color: #ccc; /* Grey by default */
     cursor: pointer;
+}
+
+
+
+.card-container {
+    max-width: 750px;
+    margin: auto;
+    padding: 20px;
+    background-color: #e2e3e5; /* Adjusted to the specified color */
+    border-radius: 15px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    color: #5B2F91; /* Purple color for title */
 }
