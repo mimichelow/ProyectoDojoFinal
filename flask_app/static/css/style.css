@@ -8,7 +8,7 @@ body{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 .chat-box{
-    height:10vh;
+
     border-color:#5B2F91 !important;
 }
 .chat-box:hover{
@@ -16,4 +16,21 @@ body{
 }
 .box{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.sender-img{
+    width: 70px;
+    height: 70px;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    margin: 0;
+}
+.sender-img img{
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 100%;
+    width: 100%;
+    transform: translate(-50%, -50%);
 }

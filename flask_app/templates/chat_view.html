@@ -45,14 +45,22 @@
             <div class="message">
                 <p>Sender: Hey there! <i class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>
             </div>
-            <div class="message">
+            <div class="message ">
                 <p>Receiver: Hi! How are you? <i class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>
             </div>
             <!-- Add more messages as needed -->
         </div>
-        <div class="type-message-container">
-            <input type="text" class="message-input" placeholder="Type your message...">
-            <button class="btn btn-primary send-button" onclick="sendMessage()">Send</button>
+        <div >
+            <form id="myForm" method="post">
+                <div class="row ">
+                    <div class="col-10">
+                        <input type="text" class="form-control" placeholder="Type your message..." aria-label="message">
+                    </div>
+                    <div class="col-1">
+                        <button type="submit" class="btn btn-primary ">Submit</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 
