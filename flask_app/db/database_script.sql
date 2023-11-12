@@ -62,7 +62,7 @@ CREATE TABLE `logins` (
   PRIMARY KEY (`id`),
   KEY `fk_logins_users_idx` (`users_id`),
   CONSTRAINT `fk_logins_users` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +71,7 @@ CREATE TABLE `logins` (
 
 LOCK TABLES `logins` WRITE;
 /*!40000 ALTER TABLE `logins` DISABLE KEYS */;
-INSERT INTO `logins` VALUES (1,'$2b$12$WI26NWW3tRyO40fOy0iCueDdkhCAZ8CSv3tTRZ7EXyZyKysumeYV.',1),(2,'$2b$12$aGJMNDj9eqHmKhWsKUEOLevy85kVOxt5tYciJOXcgpKVPrQbMMqlO',2),(3,'$2b$12$E7Yl03nXDw9muBuONXT4y.M1P.5/qlYOwoeTinlp4U0K7Bd4ZiDr2',3),(4,'$2b$12$Bp.YUp3WfuG3wkHueulK5OWxsDjqcwvge4JiTNOg.PxN6OH.xuTUK',4),(5,'$2b$12$JOYzbY9tEeaWYAK1UaoujO0hYDKM3hU1dxa5iJRqvzqIe/RIfU7dG',5),(6,'$2b$12$25RRZRJMietfuiPLnrm2YOw4FZDc6E.Yiv3rdSgGzUZfsreWZzKi.',6),(7,'$2b$12$0aoejbu.d3o4a1EPkuaCcOfNj5lJaWjJVc./KRE3efpwF0N2jqo2y',7);
+INSERT INTO `logins` VALUES (1,'$2b$12$WI26NWW3tRyO40fOy0iCueDdkhCAZ8CSv3tTRZ7EXyZyKysumeYV.',1),(2,'$2b$12$aGJMNDj9eqHmKhWsKUEOLevy85kVOxt5tYciJOXcgpKVPrQbMMqlO',2),(3,'$2b$12$E7Yl03nXDw9muBuONXT4y.M1P.5/qlYOwoeTinlp4U0K7Bd4ZiDr2',3),(4,'$2b$12$Bp.YUp3WfuG3wkHueulK5OWxsDjqcwvge4JiTNOg.PxN6OH.xuTUK',4),(5,'$2b$12$JOYzbY9tEeaWYAK1UaoujO0hYDKM3hU1dxa5iJRqvzqIe/RIfU7dG',5),(6,'$2b$12$25RRZRJMietfuiPLnrm2YOw4FZDc6E.Yiv3rdSgGzUZfsreWZzKi.',6),(7,'$2b$12$0aoejbu.d3o4a1EPkuaCcOfNj5lJaWjJVc./KRE3efpwF0N2jqo2y',7),(8,'$2b$12$dPKhAiBEtcenBAkwolk4EetJHvi3VUzyj3AUYBygLe9VqmHMZqXZC',8);
 /*!40000 ALTER TABLE `logins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,7 +148,7 @@ CREATE TABLE `users` (
   `created_at` varchar(45) DEFAULT NULL,
   `picture` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,7 +157,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Kevin','Duque',NULL,'kevin.arturo.jacome.duque@gmail.com',NULL,NULL),(2,'Arturo','Duque',NULL,'Art@gmail.com',NULL,NULL),(3,'Emir','Duque',NULL,'eduque@gmail.com',NULL,NULL),(4,'tax','Duque',NULL,'taque@gmail.com',NULL,NULL),(5,'Moises','Michellow',NULL,'mm@gmail.com',NULL,NULL),(6,'kim','Michellow',NULL,'mo@gmail.com',NULL,NULL),(7,'uuuuuuuuu','uuuuuu',NULL,'ue@gmail.com','2023-11-11 21:05:46',NULL);
+INSERT INTO `users` VALUES (1,'Kevinx','Duque','kduque','kevin.arturo.jacome.duque@gmail.com','2023-11-12 03:47:26','738a719f468f177e.gif'),(2,'Arturo','Duque','aduque','Art@gmail.com','2023-11-11 21:05:46','user.webp'),(3,'Emir','Duque','eduque','eduque@gmail.com','2023-11-11 21:05:46','user.webp'),(4,'tax','Duque','tduque','taque@gmail.com','2023-11-11 21:05:46','user.webp'),(5,'Moises','Michellow','mmichellow','mm@gmail.com','2023-11-11 21:05:46','user.webp'),(6,'kim','Michellow','kmichellow','mo@gmail.com','2023-11-11 21:05:46','user.webp'),(7,'uuuuuuuuu','uuuuuu','uuuu','ue@gmail.com','2023-11-11 21:05:46','user.webp'),(8,'EMiliox','Duquex','EDuquex','emilox@gmail.com','2023-11-12 03:45:30','738a719f468f177e.gif');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -170,4 +170,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-11 22:12:12
+-- Dump completed on 2023-11-12  4:00:58

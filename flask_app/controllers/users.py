@@ -1,9 +1,13 @@
 from flask_app import app
 from flask import render_template, redirect,request, session, flash, url_for
 from flask_bcrypt import Bcrypt
-bcrypt = Bcrypt(app)
 from flask_app.models.user import User 
+from flask import request
+from werkzeug.utils import secure_filename
+import os
+app.config['UPLOAD_FOLDER'] = './flask_app/static/uploads'
 
+bcrypt = Bcrypt(app)
 
 @app.route('/index')
 def index():
@@ -37,7 +41,30 @@ def logout():
 def profile():
     if session.get('id') == None:
         return redirect('/')
-    return render_template('edit_profile.html')
+    user = User.get_user_by_id(session['id'])
+    return render_template('edit_profile.html',user=user)
+
+
+@app.route('/edit_profile', methods=['POST'])
+def edit_profile():
+    print(request.form)
+    if not User.validate_entry2(request.form):
+        return redirect('/user/profile')
+    data = {'fname': request.form.get('fname'),
+            'lname':request.form.get('lname'),
+            'email':request.form.get('email'),
+            'nick':request.form.get('nick'),
+            'id':session['id']
+            }
+    profile_picture = request.files.get('profilePicture')
+    if profile_picture:
+        filename = secure_filename(profile_picture.filename)
+        profile_picture.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        data['picture']=filename
+    else:
+        data['picture']='user.webp'
+    User.update(data)
+    return redirect('/user/profile')
 
 
 
