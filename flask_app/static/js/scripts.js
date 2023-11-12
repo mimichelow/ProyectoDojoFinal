@@ -1,3 +1,22 @@
+function getUsers(){
+    fetch('http://127.0.0.1:5000/messages')
+        .then(res =>  res.json())
+        .then(data => {
+            var messages = document.getElementById('conversationHistory');
+            var title_receiver = document.getElementById('title_receiver')
+            title_receiver.innerText = data[0]['t4.nick']
+            messages.innerHTML=""
+            console.log(data[0])
+            for( let i = 0; i < data.length; i++){
+                messages.innerHTML += '<p>'  + data[i].nick + " : " + data[i].content + ` <i class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>`;
+            }
+        })
+
+}
+
+getUsers();
+
+
 function toggleReaction(icon) {
     if (icon.classList.contains('far') && icon.classList.contains('fa-thumbs-up')) {
         // Grey thumb up
@@ -39,7 +58,13 @@ var message = document.getElementById('message');
             var form = new FormData(message);
             // así es como configuramos una solicitud post y enviamos los datos del formulario
             fetch("http://localhost:5000/new_message", { method :'POST', body : form})
-                .then( response => response.json() )
-                .then(data => printMessage(data))
-                .then(eraseForm());
+            .then( response => response.json() )
+            .then(data => {
+                eraseForm();// After the POST request is complete, call getUsers to update the user list
+                getUsers();
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         }

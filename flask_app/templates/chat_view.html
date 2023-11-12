@@ -38,15 +38,15 @@
     <div class="chat-view-container">
         <div class="receiver-info">
             <img class="receiver-img" src="../static/img/user.webp" alt="Receiver Image">
-            <h2>Receiver's Name</h2>
+            <h2 id="title_receiver">Receiver's Name</h2>
         </div>
         <div class="conversation-history" id="conversationHistory">
             <!-- Placeholder for conversation history -->
             <div class="message">
-                <p>Sender: Hey there! <i class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>
+                <p> Sender: Hey there! < class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>
             </div>
             <div class="message ">
-                <p>Receiver: Hi! How are you? <i class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>
+                <p> Receiver: Hi! How are you? <i class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>
             </div>
             <!-- Add more messages as needed -->
         </div>
@@ -54,7 +54,9 @@
             <form id="message" method="post">
                 <div class="row ">
                     <div class="col-10">
-                        <input type="text" class="form-control" placeholder="Type your message..." aria-label="message" name="content">
+                        <input type="text" class="form-control" placeholder="{Type your message...}" aria-label="message" name="content">
+                        <input type="hidden" name="user_id" value="{{session['id']}}">
+                        <input type="hidden" name="chat_id" value="{{chat_id}}">
                     </div>
                     <div class="col-1">
                         <!-- <button type="submit" class="btn btn-primary ">Submit</button> -->

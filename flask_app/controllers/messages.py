@@ -3,14 +3,17 @@ from flask import session, redirect, url_for, flash, render_template,jsonify,req
 from flask_app.models.chat import Chat 
 from flask_app.models.message import Message 
 
+@app.route('/messages')
+def users():
+    print(session['chat-id'])
+    data = {'id': session['chat-id']}
+    return jsonify(Message.get_all_by_chat_id(data))
 
 @app.route('/new_message' , methods=['POST'])
 def new_message():
-    if 'id' in session:
-        form=dict(request.form)
-        form['chat-id']=session['chat-id']
-        #Chat-ID por ahora lo estoy poniendo en session pero esto se puede cambiar a una mejor implementacion
-        Message.save(form)
-        return jsonify(Message.get_last_json())
-    else:
-        return redirect(url_for('chats_dashboard'))
+    print(request.form)
+    data = {"chat_id": request.form.get('chat_id'),
+            "content": request.form.get('content'),
+            'user_id': request.form.get('user_id')}
+    Message.save(data)
+    return jsonify(Message.get_last_json())

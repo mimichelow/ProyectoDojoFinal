@@ -13,9 +13,9 @@ class Message:
         self.user_id = session['id']
         
     @classmethod
-    def get_all_by_chat_id(cls, id):
-        query = 'SELECT * FROM messages WHERE chat_id = %(id)s ORDER BY timestamp DESC;'
-        data = {'id': id}
+    def get_all_by_chat_id(cls, data):
+        query = 'SELECT * FROM messages as t1 left join chats as t2 on t1.chat_id=t2.id left join users as t3 on user_id=t3.id left join users as t4 on t2.user2_id=t4.id WHERE t1.chat_id = %(id)s ORDER BY timestamp asc;'
+        print(query)
         return connectToMySQL().query_db(query, data)
         
     @classmethod
@@ -24,14 +24,11 @@ class Message:
         data = {'user_id': user_id}
         return connectToMySQL().query_db(query, data)
         
-    def save(self):
-        query = 'INSERT INTO messages (content, timestamp, chat_id) VALUES (%(content)s, now(), %(chat_id)s);'
-        data = {
-            'content': self.content,
-            'timestamp': self.timestamp,
-            'chat_id': self.chat_id
-        }
+    @classmethod
+    def save(cls,data):
+        query = 'INSERT INTO messages (content, timestamp, chat_id,user_id) VALUES (%(content)s, now(), %(chat_id)s,%(user_id)s);'
         return connectToMySQL().query_db(query, data)
+    
     @classmethod
     def get_last_json(cls):
         query = "SELECT * FROM messages ORDER BY timestamp DESC LIMIT 1;"

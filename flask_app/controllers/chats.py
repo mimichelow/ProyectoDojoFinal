@@ -20,5 +20,6 @@ def view_chat(id):
     chat = Chat.get_by_id(id)
     if session['id'] != chat.user1_id and session['id'] != chat.user2_id:
         return redirect(url_for('dashboard'))
+    session['chat-id'] = id
     messages = Message.get_all_by_chat_id(id)
-    return render_template('chat_view.html', messages=messages)
+    return render_template('chat_view.html', messages=messages,chat_id=id)
