@@ -29,16 +29,10 @@ class Chat:
         if results:
             for chat in results:
                 new_chat = cls(chat)
-                data_user1 = {
-                    'id' : chat["user1_id"]
-                }
-                user1 = user.User.get_user_by_id(data_user1)
+                user1 = user.User.get_user_by_id(chat["user1_id"])
                 new_chat.user1_id = user1
-                data_user2 = {
-                    'id' : chat["user1_id"]
-                }
-                user1 = user.User.get_user_by_id(data_user1)
-                new_chat.user1_id = user1
+                user2 = user.User.get_user_by_id(chat["user2_id"])
+                new_chat.user2_id = user2
                 all_chats.append(new_chat)
             return all_chats
         else:
