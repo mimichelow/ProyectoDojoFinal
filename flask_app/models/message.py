@@ -32,3 +32,8 @@ class Message:
             'chat_id': self.chat_id
         }
         return connectToMySQL().query_db(query, data)
+    @classmethod
+    def get_last_json(cls):
+        query = "SELECT * FROM messages ORDER BY timestamp DESC LIMIT 1;"
+        results = connectToMySQL().query_db(query)
+        return results
