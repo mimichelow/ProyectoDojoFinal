@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Roboto&family=VT323&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="../static/css/style_chat_view.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_chat_view.css') }}">
     <script src="../static/js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
@@ -17,13 +17,12 @@
 <body data-bs-theme="light">
     <nav class="navbar navbar-expand-lg sticky-top navbar-dark" style="background-color:#5B2F91;">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="#" style="color:#EEEEEE;"><img src="../static/img/logo-purple.png"
-                    style="width:40px" class="me-2">WhatsDown</a>
+            <a class="navbar-brand fw-bold" href="#" style="color:#EEEEEE;"><img src="{{ url_for('static', filename='img/logo-purple.png') }}" style="width:40px" class="me-2">WhatsDown</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse  " id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item ">
-                        <a class="nav-link " aria-current="page" href="{{url_for('chats')}}">Home</a>
+                        <a class="nav-link " aria-current="page" href="{{url_for('chats_dashboard')}}">Home</a>
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link mb-0 " href="{{url_for('profile')}}">My Profile</a>

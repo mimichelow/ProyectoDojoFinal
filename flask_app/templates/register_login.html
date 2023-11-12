@@ -34,28 +34,32 @@
     </nav>
     <div class="container text-center"> 
         <div class="row justify-content-evenly mt-2  ">
-            <div class="m-3 col-7"> {% with messages = get_flashed_messages() %}     
-                    {% if messages %}                            
-                        {% for message in messages %}            
-                            <p class=" text-light rounded m-1" style="background-color:#F99417;">{{message}}</p>                   
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
+            <div class="m-3 col-7"> 
             </div>
             <div class="col-5 rounded bg-secondary-subtle box" >
                 <h1 class="mt-3 " style="color:#F99417;"> Register </h1>
+
+                {% with messages = get_flashed_messages() %}  <!-- declara una variable llamada mensajes-->
+                {% if messages %}<!-- comprobar si hay algún mensaje -->
+                    {% for message in messages %}<!-- recorrer los mensajes -->
+                        {% if message[1]==0 %}
+                        <p class=" text-light rounded m-1" style="background-color:#F99417;">{{message[0]}}</p>      
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
                 <div class="container col-10 text-start mt-4">
                     <form action="{{url_for('signup')}}" method="post">
                         <label for="fname" class="form-label mt-2">First Name:</label>
-                        <input name="fname" class="form-control" type="text">
+                        <input name="fname" class="form-control" type="text" id="fname">
                         <label for="lname" class="form-label mt-2 ">Last Name:</label>
-                        <input name="lname" class="form-control" type="text">
+                        <input name="lname" class="form-control" type="text" id="lname">
                         <label for="email" class="form-label mt-2">Email:</label>
-                        <input name="email" class="form-control" type="email">
+                        <input name="email" class="form-control" type="email" id="email">
                         <label for="pswrd" class="form-label mt-2">Password:</label>
-                        <input name="pswrd" class="form-control" type="password">
+                        <input name="pswrd" class="form-control" type="password" id="pswrd">
                         <label for="pswrd_confirm" class="form-label mt-2">Confirm Password:</label>
-                        <input name="pswrd_confirm" class="form-control" type="password">
+                        <input name="pswrd_confirm" class="form-control" type="password" id="pswrd_confirm">
                         <div class="d-grid gap-2 col-8 mx-auto">
                             <input class="btn  mt-4 mb-4" type="submit" value="Register" style="background-color:#5B2F91; color:#EEEEEE;">
                         </div>
@@ -66,6 +70,15 @@
 
             <div class="col-5 bg-secondary-subtle rounded box">
                 <h1 class="mt-3" style="color:#F99417;">Login</h1>
+                {% with messages = get_flashed_messages() %}  <!-- declara una variable llamada mensajes-->
+                {% if messages %}<!-- comprobar si hay algún mensaje -->
+                    {% for message in messages %}<!-- recorrer los mensajes -->
+                        {% if message[1]==1 %}
+                        <p class=" text-light rounded m-1" style="background-color:#F99417;">{{message[0]}}</p>      
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
                 <div class="container col-10 text-start mt-4">
                     <form action="{{url_for('signin')}}" method="post">
                         <label for="email" class="form-label mt-2">Email:</label>
