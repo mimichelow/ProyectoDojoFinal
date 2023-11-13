@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WhatsDown | Register | Login</title>
+    <title>WhatsDown | Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Roboto&family=VT323&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="../static/js/modal.js" ></script>
 </head>
 <body data-bs-theme="light">
     <nav class="navbar navbar-expand-lg sticky-top navbar-dark"style="background-color:#5B2F91;" >
@@ -33,22 +34,54 @@
         </div>
     </nav>
     <h1 class="text-center mt-4">Welcome <span style="color:#F99417;">{{session.fname}}</span>!</h1>
-    <div class="container-sm bg-secondary-subtle chats col-9 mt-4 rounded overflow-y-auto">
-            {%for chat in all_chats %}
-            <a href="{{url_for('view_chat',id=chat.id)}}" class="text-reset text-decoration-none">
-            <div class="rounded col-11 chat-box container border border-2 mt-4 d-flex align-items-center justify-content-between">
-                <div class="sender-img">
-                    <img class="rounded-circle" src="../static/uploads/{{chat.user2_id.picture}}">
-                </div>
-                <div class="mt-3 ms-3 col-9">
-                    <p class="fw-bold fs-5 ">{{chat.user2_id.fname}} {{chat.user2_id.lname}}</p>
-                    <p>{{chat.last_message.content}} - {{chat.last_message.timestamp}}</p>
-                </div>
-                <p class="rounded-circle col-1 text-center fs-5 pt-1  " style="width:40px;height:40px;background-color:#F99417; color:white" >1</p>
-            </div>
-            {%endfor%}
-        </a>
+    <div class="container text-center">
+        {% with messages = get_flashed_messages() %}  <!-- declara una variable llamada mensajes-->
+        {% if messages %}<!-- comprobar si hay algún mensaje -->
+            {% for message in messages %}<!-- recorrer los mensajes -->
+                {% if message[1]==1 %}
+                <p class=" text-light rounded m-1" style="background-color:#F99417;">{{message[0]}}</p>      
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     </div>
+    <div class="container-sm col-9 text-end"><button type="button" class="btn btn-primary border-0" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color:#5B2F91; color:#EEEEEE;">New Chat</button></div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create new chat</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{url_for('create_chat')}}" method="post">
+                <div class="modal-body">
+                    <p>Input the email of the person you would like to start a chat with:</p>
+                        <label for="email" class="form-label mt-2">Email:</label>
+                        <input name="email" class="form-control" type="email">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-primary border-0" type="submit" style="background-color:#5B2F91; color:#EEEEEE;">Create Chat</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
+        {%for chat in all_chats %}
+        <a href="{{url_for('view_chat',id=chat.id)}}" class="text-reset text-decoration-none">
+        <div class="rounded col-11 chat-box container border border-2 mt-4 d-flex align-items-center justify-content-between">
+            <div class="sender-img">
+                <img class="rounded-circle" src="../static/uploads/{{chat.user2_id.picture}}">
+            </div>
+            <div class="mt-3 ms-3 col-9">
+                <p class="fw-bold fs-5 ">{{chat.user2_id.fname}} {{chat.user2_id.lname}}</p>
+                <p>{{chat.last_message.content}} - {{chat.last_message.timestamp}}</p>
+            </div>
+            <p class="rounded-circle col-1 text-center fs-5 pt-1  " style="width:40px;height:40px;background-color:#F99417; color:white" >1</p>
+        </div>
+        {%endfor%}
+        </a>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

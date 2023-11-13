@@ -5,6 +5,7 @@ from datetime import datetime
 from flask_app.models import user
 from flask_app.models import message
 
+
 class Chat:
     def __init__(self, data):
         self.id = data['id']
@@ -53,8 +54,9 @@ class Chat:
                 'chat_id' : chat['chat_id']
                 }
                 new_chat.last_message = message.Message(message_data)
-                new_chat.last_message.timestamp = new_chat.last_message.timestamp.strftime('%Y-%m-%d')
-                all_chats.append(new_chat)
+                if new_chat.last_message.timestamp != None:
+                    new_chat.last_message.timestamp = new_chat.last_message.timestamp.strftime('%Y-%m-%d')
+                    all_chats.append(new_chat)
             return all_chats
         else:
             return []
