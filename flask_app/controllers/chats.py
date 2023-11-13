@@ -23,3 +23,7 @@ def view_chat(id):
     session['chat-id'] = id
     messages = Message.get_all_by_chat_id(id)
     return render_template('chat_view.html', messages=messages,chat_id=id)
+
+@app.route('/create_chat')
+def create_chat():
+    return render_template('create_chat.html')
