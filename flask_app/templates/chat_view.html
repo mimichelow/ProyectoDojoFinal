@@ -3,27 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WhatsDown | Chat View</title>
+    <title>WhatsDown | Chat </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Roboto&family=VT323&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="../static/css/style_chat_view.css">
-    <script src="../static/js/scripts.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_chat_view.css') }}">
+    <script src="../static/js/scripts.js" async></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 
 <body data-bs-theme="light">
     <nav class="navbar navbar-expand-lg sticky-top navbar-dark" style="background-color:#5B2F91;">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="#" style="color:#EEEEEE;"><img src="../static/img/logo-purple.png"
-                    style="width:40px" class="me-2">WhatsDown</a>
+            <a class="navbar-brand fw-bold" href="#" style="color:#EEEEEE;"><img src="{{ url_for('static', filename='img/logo-purple.png') }}" style="width:40px" class="me-2">WhatsDown</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse  " id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item ">
-                        <a class="nav-link " aria-current="page" href="{{url_for('chats')}}">Home</a>
+                        <a class="nav-link " aria-current="page" href="{{url_for('chats_dashboard')}}">Home</a>
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link mb-0 " href="{{url_for('profile')}}">My Profile</a>
@@ -35,25 +34,58 @@
             </div>
         </div>
     </nav>
-
+    <div class="container-sm col-9 text-end mt-4 mb-4"><button type="button" class="btn btn-primary border-0" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color:#5B2F91; color:#EEEEEE;">New Chat</button></div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create new chat</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{url_for('create_chat')}}" method="post">
+                <div class="modal-body">
+                    <p>Input the email of the person you would like to start a chat with:</p>
+                        <label for="email" class="form-label mt-2">Email:</label>
+                        <input name="email" class="form-control" type="email">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-primary border-0" type="submit" style="background-color:#5B2F91; color:#EEEEEE;">Create Chat</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
     <div class="chat-view-container">
         <div class="receiver-info">
             <img class="receiver-img" src="../static/img/user.webp" alt="Receiver Image">
-            <h2>Receiver's Name</h2>
+            <h2 id="title_receiver">Receiver's Name</h2>
         </div>
         <div class="conversation-history" id="conversationHistory">
             <!-- Placeholder for conversation history -->
             <div class="message">
-                <p>Sender: Hey there! <i class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>
+                <p> Sender: Hey there! < class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>
             </div>
-            <div class="message">
-                <p>Receiver: Hi! How are you? <i class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>
+            <div class="message ">
+                <p> Receiver: Hi! How are you? <i class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>
             </div>
             <!-- Add more messages as needed -->
         </div>
-        <div class="type-message-container">
-            <input type="text" class="message-input" placeholder="Type your message...">
-            <button class="btn btn-primary send-button" onclick="sendMessage()">Send</button>
+        <div >
+            <form id="message" method="post">
+                <div class="row ">
+                    <div class="col-10">
+                        <input type="text" class="form-control" placeholder="{Type your message...}" aria-label="message" name="content">
+                        <input type="hidden" name="user_id" value="{{session['id']}}">
+                        <input type="hidden" name="chat_id" value="{{chat_id}}">
+                    </div>
+                    <div class="col-1">
+                        <!-- <button type="submit" class="btn btn-primary ">Submit</button> -->
+                        <input type="submit" id="submit_btn" value="Submit" class="btn btn-primary ">
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 
