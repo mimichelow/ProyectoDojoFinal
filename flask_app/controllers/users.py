@@ -31,7 +31,7 @@ def signin():
         return redirect('/dashboard')
     
 
-@app.route("/logout", methods=["POST"])
+@app.route("/logout", methods=["GET","POST"])
 def logout():
     session.clear()
     return redirect ('/')
