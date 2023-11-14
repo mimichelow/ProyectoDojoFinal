@@ -15,6 +15,7 @@ def login(email,password):
     else:
         flash("Contraseña  o correo incorrecto")
         return redirect(url_for('index'))
+
 @app.route("/logout", methods=["POST"])
 def logout():
     session.clear
