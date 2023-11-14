@@ -31,10 +31,6 @@ def signin():
         return redirect('/dashboard')
     
 
-@app.route('/logout', methods=['GET', 'POST'])
-        flash("Contraseña  o correo incorrecto")
-        return redirect(url_for('index'))
-
 @app.route("/logout", methods=["POST"])
 def logout():
     session.clear()
