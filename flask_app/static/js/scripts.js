@@ -3,19 +3,25 @@ function getUsers(){
         .then(res =>  res.json())
         .then(data => {
             var messages = document.getElementById('conversationHistory');
-            var title_receiver = document.getElementById('title_receiver')
+            var title_receiver = document.getElementById('title_receiver');
+            var i_id = document.getElementById('user_id');
             title_receiver.innerText = data[0]['t4.nick']
             messages.innerHTML=""
-            console.log(data[0])
             for( let i = 0; i < data.length; i++){
-                messages.innerHTML += '<p>'  + data[i].nick + " : " + data[i].content + ` <i class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>`;
+                if (data[i].user_id == i_id.value){
+                    messages.innerHTML += '<p class="text-sm-end col-10">'  + `<span style="color: #5B2F91; font-weight: bold;">You:</span>` + " : " + data[i].content + ` <i class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>`;
+                } else {
+                    messages.innerHTML += '<p>' + `<span style="color: #5B2F91; font-weight: bold;">` +  data[i].nick + `</span>` + " : " + data[i].content + ` <i class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>`;
+                
+                }
             }
-        })
+        }
+        )
 
 }
 
 getUsers();
-
+setInterval(getUsers, 500);
 
 function toggleReaction(icon) {
     if (icon.classList.contains('far') && icon.classList.contains('fa-thumbs-up')) {

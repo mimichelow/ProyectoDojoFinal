@@ -10,7 +10,9 @@ def chats_dashboard():
     if 'id' in session:
         data = {'user_id' : session['id']}
         all_chats = Chat.get_all_by_user(data)
-        print(all_chats)
+        print(len(all_chats))
+        Chat.selectionSort(all_chats)
+        all_chats.reverse()
         return render_template('chats_dashboard.html',all_chats=all_chats)
     else:
         return redirect(url_for('index'))

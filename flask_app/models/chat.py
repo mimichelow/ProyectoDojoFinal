@@ -12,6 +12,7 @@ class Chat:
         self.user1_id = data['user1_id']
         self.user2_id = data['user2_id']
         self.last_message = ''
+        self.time = ''
     
     @classmethod
     def get_by_id(cls, id):
@@ -55,8 +56,9 @@ class Chat:
                 }
                 new_chat.last_message = message.Message(message_data)
                 if new_chat.last_message.timestamp != None:
-                    new_chat.last_message.timestamp = new_chat.last_message.timestamp.strftime('%Y-%m-%d')
+                    new_chat.last_message.timestamp = new_chat.last_message.timestamp.strftime('%Y-%m-%d-%H-%M-%S ')
                     all_chats.append(new_chat)
+                new_chat.time = new_chat.last_message.timestamp
             return all_chats
         else:
             return []
@@ -68,3 +70,22 @@ class Chat:
             'user2_id': self.user2_id,
         }
         return connectToMySQL().query_db(query, data)
+    
+    @staticmethod
+    def selectionSort(array):
+        size = len(array)-1
+        for ind in range(0,size): 
+            print(f"Original loop {ind}--------------------------")
+            min_index = ind
+            for j in array[0:min_index+1]: 
+                print(f"This is the pointer{array[min_index+1].time}")
+                if array[min_index+1].time < j.time:
+                    print("True")
+                    x= array.pop(min_index+1)
+                    array.insert(min_index,x)
+                    min_index = min_index -1
+                else:
+                    print("False")
+                print(array)
+
+
