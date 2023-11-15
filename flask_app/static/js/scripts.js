@@ -9,9 +9,9 @@ function getUsers(){
             messages.innerHTML=""
             for( let i = 0; i < data.length; i++){
                 if (data[i].user_id == i_id.value){
-                    messages.innerHTML += '<p class="text-sm-end col-10">'  + `<span style="color: #5B2F91; font-weight: bold;">You:</span>` + " : " + data[i].content + ` <i class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>`;
+                    messages.innerHTML += '<p class="text-sm-end col-10 ">'  + `<span style="color: #5B2F91; font-weight: bold;">You: </span>` + data[i].content + ` <i class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>`;
                 } else {
-                    messages.innerHTML += '<p>' + `<span style="color: #5B2F91; font-weight: bold;">` +  data[i].nick + `</span>` + " : " + data[i].content + ` <i class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>`;
+                    messages.innerHTML += '<p>' + `<span style="color: #5B2F91; font-weight: bold;">` +  data[i].nick + `: </span>` + data[i].content + ` <i class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>`;
                 
                 }
             }

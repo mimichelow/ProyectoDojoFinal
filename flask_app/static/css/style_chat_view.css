@@ -22,7 +22,6 @@ body {
     max-width: 750px ;
     margin: auto;
     padding: 20px;
-    background-color: #e2e3e5 ;
     border-radius: 15px;
     margin-top: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) ;
@@ -50,6 +49,8 @@ body {
 
 .message {
     margin-bottom: 10px;
+    border: 2px solid #5B2F91;
+    border-radius: 20px;
 }
 
 .type-message-container {
