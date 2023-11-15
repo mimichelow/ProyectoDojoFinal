@@ -32,7 +32,7 @@ class Chat:
         if results:
             for chat in results:
                 new_chat = cls(chat)
-                print(chat)
+                print(chat)                    
                 user1_data = {
                 "id" : chat["user1_id"],
                 "fname" : chat["fname"],
@@ -40,7 +40,6 @@ class Chat:
                 "nick" : chat["nick"],
                 "email" : chat["email"],
                 "picture" : chat["picture"]}
-                new_chat.user1_id = user.User(user1_data)
                 user2_data = {
                 "id" : chat["user2_id"],
                 "fname" : chat["t4.fname"],
@@ -48,7 +47,12 @@ class Chat:
                 "nick" : chat["t4.nick"],
                 "email" : chat["t4.email"],
                 "picture" : chat["t4.picture"]}
+                new_chat.user1_id = user.User(user1_data)
                 new_chat.user2_id = user.User(user2_data)
+                if session['id'] == user2_data['id']:
+                    x = new_chat.user1_id
+                    new_chat.user1_id = new_chat.user2_id
+                    new_chat.user2_id = x
                 message_data = {
                 'content' : chat['content'],
                 'timestamp' : chat['timestamp'],

@@ -1,4 +1,22 @@
+/*Here we are setting up the variable isUserScrolling as False but if we use it it will stop the fetchin or messages*/
+var isUserScrolling = false;
+let scrollTimeout;
+
+document.querySelector('.conversation-history').addEventListener('scroll', function() {
+    isUserScrolling = true;
+    // Clear the previous timeout
+    clearTimeout(scrollTimeout);
+    // Set a timeout to reset the flag after 5 second of inactivity
+    scrollTimeout = setTimeout(function() {
+        isUserScrolling = false;
+    }, 5000);
+});
+
 function getUsers(){
+    if (isUserScrolling) {
+        return;
+    }
+
     fetch('http://127.0.0.1:5000/messages')
         .then(res =>  res.json())
         .then(data => {
@@ -15,13 +33,18 @@ function getUsers(){
                 
                 }
             }
+            messages.scrollTop = messages.scrollHeight;// Scroll to bottom after messages are added
         }
         )
 
 }
 
+
+
 getUsers();
 setInterval(getUsers, 500);
+
+
 
 function toggleReaction(icon) {
     if (icon.classList.contains('far') && icon.classList.contains('fa-thumbs-up')) {

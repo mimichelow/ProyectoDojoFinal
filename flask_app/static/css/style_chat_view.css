@@ -26,6 +26,7 @@ body {
     border-radius: 15px;
     margin-top: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) ;
+
 }
 
 .receiver-info {
@@ -46,6 +47,8 @@ body {
 
 .conversation-history {
     margin-top: 20px;
+    max-height: 350px ;
+    overflow-y: scroll;
 }
 
 .message {
