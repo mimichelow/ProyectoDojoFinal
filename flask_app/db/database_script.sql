@@ -93,7 +93,7 @@ CREATE TABLE `messages` (
   KEY `fk_messages_users1_idx` (`user_id`),
   CONSTRAINT `fk_messages_chats1` FOREIGN KEY (`chat_id`) REFERENCES `chats` (`id`),
   CONSTRAINT `fk_messages_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +102,7 @@ CREATE TABLE `messages` (
 
 LOCK TABLES `messages` WRITE;
 /*!40000 ALTER TABLE `messages` DISABLE KEYS */;
-INSERT INTO `messages` VALUES (1,'Hola, como va todo?','2023-11-11 20:32:29',1,1),(2,'Bien y tu?','2023-11-11 21:17:12',1,5),(3,'Vamos a estudiar?','2023-11-11 21:17:12',2,1),(4,'sdgadfgs','2023-11-12 06:04:25',1,1),(5,'GGFD','2023-11-12 06:10:33',1,1),(6,'xxxxxx','2023-11-12 06:23:51',1,1),(7,'ssss','2023-11-12 06:24:01',1,1),(14,'hey, I am talking','2023-11-12 07:35:53',1,1),(15,'oooooo','2023-11-12 08:00:05',1,1),(16,'Hey u, reply!','2023-11-12 08:13:35',2,1),(17,'hey, I am talking','2023-11-12 08:17:03',1,1),(18,'Yes, I know!','2023-11-12 08:17:16',1,5),(19,'Sure?','2023-11-12 08:17:44',1,1),(20,'Hey, whatsapp?','2023-11-12 08:17:44',3,5),(21,'Good and u?','2023-11-12 08:22:50',3,5);
+INSERT INTO `messages` VALUES (1,'Hola, como va todo?','2023-11-11 20:32:29',1,1),(2,'Bien y tu?','2023-11-11 21:17:12',1,5),(3,'Vamos a estudiar?','2023-11-11 21:17:12',2,1),(4,'sdgadfgs','2023-11-12 06:04:25',1,1),(5,'GGFD','2023-11-12 06:10:33',1,1),(6,'xxxxxx','2023-11-12 06:23:51',1,1),(7,'ssss','2023-11-12 06:24:01',1,1),(14,'hey, I am talking','2023-11-12 07:35:53',1,1),(15,'oooooo','2023-11-12 08:00:05',1,1),(16,'Hey u, reply!','2023-11-12 08:13:35',2,1),(17,'hey, I am talking','2023-11-12 08:17:03',1,1),(18,'Yes, I know!','2023-11-12 08:17:16',1,5),(19,'Sure?','2023-11-12 08:17:44',1,1),(20,'Hey, whatsapp?','2023-11-12 08:17:44',3,5),(21,'Good and u?','2023-11-12 08:22:50',3,5),(22,'holi','2023-11-15 16:13:15',1,1);
 /*!40000 ALTER TABLE `messages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,10 +144,11 @@ CREATE TABLE `users` (
   `fname` varchar(45) DEFAULT NULL,
   `lname` varchar(45) DEFAULT NULL,
   `nick` varchar(45) DEFAULT NULL,
-  `email` varchar(45) DEFAULT NULL,
+  `email` varchar(45) NOT NULL,
   `created_at` varchar(45) DEFAULT NULL,
   `picture` varchar(150) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `dark_mode` varchar(5) DEFAULT 'NO',
+  PRIMARY KEY (`id`,`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -157,7 +158,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Kevinx','Duque','kduque','kevin.arturo.jacome.duque@gmail.com','2023-11-12 08:15:22','738a719f468f177e.gif'),(2,'Arturo','Duque','aduque','Art@gmail.com','2023-11-11 21:05:46','user.webp'),(3,'Emir','Duque','eduque','eduque@gmail.com','2023-11-11 21:05:46','user.webp'),(4,'tax','Duque','tduque','taque@gmail.com','2023-11-11 21:05:46','user.webp'),(5,'Moises','Michellow','mmichellow','mm@gmail.com','2023-11-11 21:05:46','738a719f468f177e.gif'),(6,'kim','Michellow','kmichellow','mo@gmail.com','2023-11-11 21:05:46','user.webp'),(7,'uuuuuuuuu','uuuuuu','uuuu','ue@gmail.com','2023-11-11 21:05:46','user.webp'),(8,'EMiliox','Duquex','EDuquex','emilox@gmail.com','2023-11-12 03:45:30','738a719f468f177e.gif');
+INSERT INTO `users` VALUES (1,'Kevinx','Duque','kduque','kevin.arturo.jacome.duque@gmail.com','2023-11-12 08:15:22','738a719f468f177e.gif','YES'),(2,'Arturo','Duque','aduque','Art@gmail.com','2023-11-11 21:05:46','user.webp','NO'),(3,'Emir','Duque','eduque','eduque@gmail.com','2023-11-11 21:05:46','user.webp','YES'),(4,'tax','Duque','tduque','taque@gmail.com','2023-11-11 21:05:46','user.webp','NO'),(5,'Moises','Michellow','mmichellow','mm@gmail.com','2023-11-11 21:05:46','738a719f468f177e.gif','NO'),(6,'kim','Michellow','kmichellow','mo@gmail.com','2023-11-11 21:05:46','user.webp','NO'),(7,'uuuuuuuuu','uuuuuu','uuuu','ue@gmail.com','2023-11-11 21:05:46','user.webp','NO'),(8,'EMiliox','Duquex','EDuquex','emilox@gmail.com','2023-11-12 03:45:30','738a719f468f177e.gif','NO');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -170,4 +171,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-12  8:23:59
+-- Dump completed on 2023-11-15 16:56:31
