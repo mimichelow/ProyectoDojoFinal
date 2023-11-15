@@ -124,3 +124,17 @@ class User:
             return cls(result[0])
         else:
             return None
+    
+    @classmethod
+    def getDarkMode(cls, id):
+        query = f'select dark_mode from users where id = {id};'
+        mysql = connectToMySQL()
+        result = mysql.query_db(query)
+        return result
+    @classmethod
+    def changeDarkMode(cls,data):
+        query = 'UPDATE users SET dark_mode=%(mode)s WHERE id = %(id)s;'
+        mysql = connectToMySQL()
+        result = mysql.query_db(query,data)
+        return result
+

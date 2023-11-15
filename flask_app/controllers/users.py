@@ -1,5 +1,5 @@
 from flask_app import app
-from flask import render_template, redirect,request, session, flash, url_for
+from flask import render_template, redirect,request, session, flash, url_for,jsonify
 from flask_bcrypt import Bcrypt
 from flask_app.models.user import User 
 from flask import request
@@ -90,3 +90,19 @@ def signup():
     session['fname'] = data['fname']
     session['lname'] = data['lname']
     return redirect('/dashboard')
+
+@app.route ('/dark_mode_load', methods=['GET', 'POST'])
+def darkMode():
+    id=int(session['id'])
+    result=User.getDarkMode(id)
+    print(result)
+    return jsonify(result[0])
+
+@app.route ('/dark_mode_change/<mode>', methods=['GET', 'POST'])
+def darkModeChange(mode):
+    data={
+        "mode": mode,
+        "id"  : session["id"]
+    }
+    result=User.changeDarkMode(data)
+    return jsonify(result)
