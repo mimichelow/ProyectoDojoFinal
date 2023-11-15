@@ -18,7 +18,6 @@ def index():
 
 @app.route('/login', methods=['POST'])
 def signin():
-    print(request.form)
     email = request.form.get('email')
     pswrd = request.form.get('pswrd')
     if (user_id:=User.check_login(email=email, pswrd=pswrd)):
@@ -47,7 +46,6 @@ def profile():
 
 @app.route('/edit_profile', methods=['POST'])
 def edit_profile():
-    print(request.form)
     if not User.validate_entry2(request.form):
         return redirect('/user/profile')
     data = {'fname': request.form.get('fname'),
@@ -70,7 +68,6 @@ def edit_profile():
 
 @app.route('/signup', methods=['POST'])
 def signup():
-    print(request.form)
     if not User.validate_entry(request.form):
         return redirect('/')
     data = {

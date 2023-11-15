@@ -16,11 +16,28 @@ class Chat:
     
     @classmethod
     def get_by_id(cls, id):
-        query = 'SELECT * FROM chats WHERE id = %(id)s;'
+        query = 'SELECT * FROM chats as t1 left join users as t2 on t1.user1_id=t2.id left join users as t3 on t1.user2_id=t3.id WHERE t1.id = %(id)s;'
         data = {'id': id}
         result = connectToMySQL().query_db(query, data)
         if result:
-            return cls(result[0])
+            x = cls(result[0])
+            data_user1 = {
+                "id" : result[0]["user1_id"],
+                "fname" : result[0]["fname"],
+                "lname" : result[0]["lname"],
+                "nick" : result[0]["nick"],
+                "email" : result[0]["email"],
+                "picture" : result[0]["picture"]}
+            data_user2 = {
+                "id" : result[0]["user2_id"],
+                "fname" : result[0]["t3.fname"],
+                "lname" : result[0]["t3.lname"],
+                "nick" : result[0]["t3.nick"],
+                "email" : result[0]["t3.email"],
+                "picture" : result[0]["t3.picture"]}
+            x.user1_id = user.User(data_user1)
+            x.user2_id = user.User(data_user2)
+            return x
         else:
             return None
     
@@ -32,7 +49,6 @@ class Chat:
         if results:
             for chat in results:
                 new_chat = cls(chat)
-                print(chat)
                 user1_data = {
                 "id" : chat["user1_id"],
                 "fname" : chat["fname"],
@@ -40,7 +56,6 @@ class Chat:
                 "nick" : chat["nick"],
                 "email" : chat["email"],
                 "picture" : chat["picture"]}
-                new_chat.user1_id = user.User(user1_data)
                 user2_data = {
                 "id" : chat["user2_id"],
                 "fname" : chat["t4.fname"],
@@ -48,7 +63,12 @@ class Chat:
                 "nick" : chat["t4.nick"],
                 "email" : chat["t4.email"],
                 "picture" : chat["t4.picture"]}
+                new_chat.user1_id = user.User(user1_data)
                 new_chat.user2_id = user.User(user2_data)
+                if session['id'] == user2_data['id']:
+                    x = new_chat.user1_id
+                    new_chat.user1_id = new_chat.user2_id
+                    new_chat.user2_id = x
                 message_data = {
                 'content' : chat['content'],
                 'timestamp' : chat['timestamp'],
@@ -75,17 +95,11 @@ class Chat:
     def selectionSort(array):
         size = len(array)-1
         for ind in range(0,size): 
-            print(f"Original loop {ind}--------------------------")
             min_index = ind
             for j in array[0:min_index+1]: 
-                print(f"This is the pointer{array[min_index+1].time}")
                 if array[min_index+1].time < j.time:
-                    print("True")
                     x= array.pop(min_index+1)
                     array.insert(min_index,x)
                     min_index = min_index -1
-                else:
-                    print("False")
-                print(array)
 
 
