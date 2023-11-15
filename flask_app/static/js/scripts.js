@@ -21,9 +21,9 @@ function getUsers(){
         .then(res =>  res.json())
         .then(data => {
             var messages = document.getElementById('conversationHistory');
-            var title_receiver = document.getElementById('title_receiver');
+            // var title_receiver = document.getElementById('title_receiver');
             var i_id = document.getElementById('user_id');
-            title_receiver.innerText = data[0]['t4.nick']
+            // title_receiver.innerText = data[0]['t4.nick']
             messages.innerHTML=""
             for( let i = 0; i < data.length; i++){
                 if (data[i].user_id == i_id.value){
