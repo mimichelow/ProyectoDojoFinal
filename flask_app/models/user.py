@@ -21,6 +21,7 @@ class User:
         self.nick = data['nick']
         self.email = data['email']
         self.picture = data['picture']
+        self.dark_mode="NO"
     
     @classmethod
     def get_user_by_id(cls, id):
