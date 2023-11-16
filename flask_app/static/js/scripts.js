@@ -27,7 +27,7 @@ function getUsers(){
             messages.innerHTML=""
             for( let i = 0; i < data.length; i++){
                 if (data[i].user_id == i_id.value){
-                    messages.innerHTML += '<p class="text-sm-end col-10 ">'  + `<span style="color: #5B2F91; font-weight: bold;">You: </span>` + data[i].content + ` <i class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>`;
+                    messages.innerHTML += '<p class="text-sm-end col-10 ">'  + `<span style="color: #5B2F91; font-weight: bold;">You: </span>` + data[i].content + ` <i class="far fa-thumbs-up reaction-icon"></i></p>`;
                 } else {
                     messages.innerHTML += '<p>' + `<span style="color: #5B2F91; font-weight: bold;">` +  data[i].nick + `: </span>` + data[i].content + ` <i class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>`;
                 
@@ -42,7 +42,7 @@ function getUsers(){
 
 
 getUsers();
-setInterval(getUsers, 500);
+// setInterval(getUsers, 500);
 
 
 
@@ -87,7 +87,8 @@ var message = document.getElementById('message');
             var form = new FormData(message);
             // así es como configuramos una solicitud post y enviamos los datos del formulario
             fetch("http://localhost:5000/new_message", { method :'POST', body : form})
-            .then( response => response.json() )
+            .then( response => response.json()
+            )
             .then(data => {
                 eraseForm();// After the POST request is complete, call getUsers to update the user list
                 getUsers();

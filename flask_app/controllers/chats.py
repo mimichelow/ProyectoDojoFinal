@@ -18,9 +18,11 @@ def chats_dashboard():
 
 @app.route('/chats/<int:id>')
 def view_chat(id):
+    if session.get('id') == None:
+        return redirect('/')
     chat = Chat.get_by_id(id)
     if session['id'] != chat.user1_id.id and session['id'] != chat.user2_id.id:
-        return redirect(url_for('chats_dashboard'))
+        return redirect('/')
     session['chat-id'] = id
     if chat.user2_id.id == session['id']:
         chat.user1_id, chat.user2_id = chat.user2_id, chat.user1_id
