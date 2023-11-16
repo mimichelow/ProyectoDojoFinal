@@ -21,6 +21,7 @@ class User:
         self.nick = data['nick']
         self.email = data['email']
         self.picture = data['picture']
+        self.dark_mode="NO"
     
     @classmethod
     def get_user_by_id(cls, id):
@@ -31,6 +32,17 @@ class User:
             return cls(result[0])
         else:
             return None
+
+    @classmethod
+    def get_user_by_email(cls, email):
+        query = 'SELECT * FROM users WHERE email = %(email)s;'
+        data = {'email': email}
+        result = connectToMySQL().query_db(query, data)
+        if result:
+            return cls(result[0])
+        else:
+            return None
+
 
     @classmethod
     def check_login(cls, email, pswrd):

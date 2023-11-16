@@ -72,7 +72,7 @@
             </div>
         </div>
     </div>
-    <div class="container col-5 rounded bg-secondary-subtle mt-4 p-4 box">
+    <div class="container col-5 rounded bg-secondary-subtle mt-4 p-4 box overflow-y-auto">
         {%for chat in all_chats %}
         <a href="{{url_for('view_chat',id=chat.id)}}" class="text-reset text-decoration-none">
         <div class="rounded col-11 chat-box container border border-2 mt-4 d-flex align-items-center justify-content-between">
