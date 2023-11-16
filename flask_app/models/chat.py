@@ -4,7 +4,7 @@ from flask_app.config.mysqlconnection import connectToMySQL
 from datetime import datetime
 from flask_app.models import user
 from flask_app.models import message
-
+from datetime import date
 
 class Chat:
     def __init__(self, data):
@@ -75,8 +75,16 @@ class Chat:
                 'chat_id' : chat['chat_id']
                 }
                 new_chat.last_message = message.Message(message_data)
+                
                 if new_chat.last_message.timestamp != None:
-                    new_chat.last_message.timestamp = new_chat.last_message.timestamp.strftime('%Y-%m-%d-%H-%M-%S ')
+                    date_now=date.today()
+                    if new_chat.last_message.timestamp.month==date_now.month and new_chat.last_message.timestamp.day==date_now.day and new_chat.last_message.timestamp.year==date_now.year:
+                        print('IM AM IN')
+                        new_chat.last_message.timestamp = new_chat.last_message.timestamp.strftime('%H:%M')
+                    # elif same_week(new_chat.last_message.timestamp):
+                    #     new_chat.last_message.timestamp =new_chat.last_message.timestamp.strftime('%A') 
+                    else:
+                        new_chat.last_message.timestamp = new_chat.last_message.timestamp.strftime('%m/%d/%Y')
                     all_chats.append(new_chat)
                 new_chat.time = new_chat.last_message.timestamp
             return all_chats
@@ -101,3 +109,8 @@ class Chat:
                     min_index = min_index -1
 
 
+def same_week(dateString):
+    '''returns true if a dateString in %Y%m%d format is part of the current week'''
+    d1 = dateString
+    d2 = datetime.today()
+    return d1.isocalendar()[1] == d2.isocalendar()[1] and d1.year == d2.year  

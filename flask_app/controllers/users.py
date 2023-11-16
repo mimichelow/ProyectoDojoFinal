@@ -5,6 +5,8 @@ from flask_app.models.user import User
 from flask import request
 from werkzeug.utils import secure_filename
 import os
+from datetime import datetime
+
 app.config['UPLOAD_FOLDER'] = './flask_app/static/uploads'
 
 bcrypt = Bcrypt(app)

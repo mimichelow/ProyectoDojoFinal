@@ -3,6 +3,7 @@ from flask import session, redirect, url_for, flash, render_template,request
 from flask_app.models.chat import Chat 
 from flask_app.models.message import Message 
 from flask_app.models.user import User
+from datetime import datetime
 
 
 @app.route('/')
