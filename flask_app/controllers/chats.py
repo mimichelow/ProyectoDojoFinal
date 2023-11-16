@@ -1,7 +1,8 @@
 from flask_app import app
-from flask import session, redirect, url_for, flash, render_template
+from flask import session, redirect, url_for, flash, render_template,request
 from flask_app.models.chat import Chat 
 from flask_app.models.message import Message 
+from flask_app.models.user import User
 
 
 @app.route('/')
@@ -26,6 +27,13 @@ def view_chat(id):
         chat.user1_id, chat.user2_id = chat.user2_id, chat.user1_id
     return render_template('chat_view.html',chat_id=id,chat=chat)
 
-@app.route('/create_chat')
+@app.route('/create_chat', methods=['POST'])
 def create_chat():
-    return render_template('create_chat.html')
+    reciever=User.get_user_by_email(request.form['email'])
+    print(reciever)
+    data={
+    'user1_id':session['id'],
+    'user2_id':reciever.id
+    }
+    chat_id=Chat.save(data)
+    return redirect(url_for('view_chat',id=chat_id))

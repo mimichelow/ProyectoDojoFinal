@@ -83,13 +83,11 @@ class Chat:
         else:
             return []
     
-    def save(self):
+    def save(data):
         query = 'INSERT INTO chats (user1_id,user2_id,created_at,updated_at) VALUES (%(user1_id)s, %(user2_id)s,now(),now());'
-        data = {
-            'user1_id': self.user1_id,
-            'user2_id': self.user2_id,
-        }
-        return connectToMySQL().query_db(query, data)
+        result=connectToMySQL().query_db(query, data)
+        print("SAVE RESULT", result)
+        return result
     
     @staticmethod
     def selectionSort(array):

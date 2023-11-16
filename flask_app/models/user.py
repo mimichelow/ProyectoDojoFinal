@@ -33,6 +33,17 @@ class User:
             return None
 
     @classmethod
+    def get_user_by_email(cls, email):
+        query = 'SELECT * FROM users WHERE email = %(email)s;'
+        data = {'email': email}
+        result = connectToMySQL().query_db(query, data)
+        if result:
+            return cls(result[0])
+        else:
+            return None
+
+
+    @classmethod
     def check_login(cls, email, pswrd):
         query = 'SELECT users.id, users.email, logins.pwd FROM users LEFT JOIN logins ON users.id = logins.users_id WHERE email =  %(email)s;'
         data = {'email': email}
