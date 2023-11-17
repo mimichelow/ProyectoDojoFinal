@@ -26,12 +26,27 @@ function getUsers(){
             // title_receiver.innerText = data[0]['t4.nick']
             messages.innerHTML=""
             for( let i = 0; i < data.length; i++){
-
                 if (data[i].user_id == i_id.value){
-                    messages.innerHTML += '<p class="text-sm-end col-10 ">'  + `<span style="color: #5B2F91; font-weight: bold;">You: </span>` + data[i].content + ` <i class="far fa-thumbs-up reaction-icon"></i></p>`;
+                    if(data[i].reaction==0){
+                        messages.innerHTML += '<p class="text-sm-end col-10 ">'  + `<span style="color: #5B2F91; font-weight: bold;">You: </span>` + data[i].content + ` <i style="color:#5B2F91;" class="far fa-thumbs-up reaction-icon"></i></p>`;
+                    } else if(data[i].reaction==1){
+                        messages.innerHTML += '<p class="text-sm-end col-10 ">'  + `<span style="color: #5B2F91; font-weight: bold;">You: </span>` + data[i].content + ` <i style="color:#5B2F91;" class="fas fa-thumbs-up reaction-icon"></i></p>`;
+                    } else if (data[i].reaction==2){
+                        messages.innerHTML += '<p class="text-sm-end col-10 ">'  + `<span style="color: #5B2F91; font-weight: bold;">You: </span>` + data[i].content + ` <i style="color:#5B2F91;" class="fas fa-thumbs-down reaction-icon"></i></p>`;
+                    } else {
+                        messages.innerHTML += '<p class="text-sm-end col-10 ">'  + `<span style="color: #5B2F91; font-weight: bold;">You: </span>` + data[i].content + ` <i style="color:#5B2F91;" class="far fa-thumbs-up reaction-icon"></i></p>`;
+                    }
+                    
                 } else {
-                    messages.innerHTML += '<p>' + `<span style="color: #5B2F91; font-weight: bold;">` +  data[i].nick + `: </span>` + data[i].content + `<i data-id="` + data[i].id + `" class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>`;
-                
+                    if(data[i].reaction==0){
+                        messages.innerHTML += '<p>' + `<span style="color: #5B2F91; font-weight: bold;">` +  data[i].nick + `: </span>` + data[i].content + `<i style="color:#5B2F91;" data-id="` + data[i].id + `" class="far fa-thumbs-up reaction-icon"  onclick="toggleReaction(this)"></i></p>`;
+                    } else if(data[i].reaction==1){
+                        messages.innerHTML += '<p>' + `<span style="color: #5B2F91; font-weight: bold;">` +  data[i].nick + `: </span>` + data[i].content + `<i style="color:#5B2F91;" data-id="` + data[i].id + `" class="fas fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>`;
+                    } else if (data[i].reaction==2){
+                        messages.innerHTML += '<p>' + `<span style="color: #5B2F91; font-weight: bold;">` +  data[i].nick + `: </span>` + data[i].content + `<i style="color:#5B2F91;" data-id="` + data[i].id + `" class="fas fa-thumbs-down reaction-icon" onclick="toggleReaction(this)"></i></p>`;
+                    } else {
+                        messages.innerHTML += '<p>' + `<span style="color: #5B2F91; font-weight: bold;">` +  data[i].nick + `: </span>` + data[i].content + `<i style="color:#5B2F91;" data-id="` + data[i].id + `" class="far fa-thumbs-up reaction-icon" onclick="toggleReaction(this)"></i></p>`;
+                    }
                 }
             }
             messages.scrollTop = messages.scrollHeight;// Scroll to bottom after messages are added
@@ -50,7 +65,7 @@ setInterval(getUsers, 500);
 function toggleReaction(icon) {
     var message_id = icon.dataset.id;
     // Make an AJAX request to the server
-    console.log(message_id);
+    // console.log(message_id);
     fetch('http://127.0.0.1:5000/new_reaction', {
         method: 'POST',
         headers: {
@@ -65,6 +80,7 @@ function toggleReaction(icon) {
     .then(response => response.json())
     .then(data => {
         // Handle the response data
+        getUsers();
         console.log(data);
     })
     .catch(error => {

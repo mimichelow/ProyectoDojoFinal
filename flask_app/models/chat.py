@@ -16,6 +16,7 @@ class Chat:
         self.user2_id = data['user2_id']
         self.last_message = ''
         self.time = ''
+        self.time2 = ''
     
     @classmethod
     def get_by_id(cls, id):
@@ -78,7 +79,7 @@ class Chat:
                 'chat_id' : chat['chat_id']
                 }
                 new_chat.last_message = message.Message(message_data)
-                
+                new_chat.time2 = new_chat.last_message.timestamp
                 if new_chat.last_message.timestamp != None:
                     date_now=date.today()
                     if new_chat.last_message.timestamp.month==date_now.month and new_chat.last_message.timestamp.day==date_now.day and new_chat.last_message.timestamp.year==date_now.year:
@@ -88,8 +89,9 @@ class Chat:
                     #     new_chat.last_message.timestamp =new_chat.last_message.timestamp.strftime('%A') 
                     else:
                         new_chat.last_message.timestamp = new_chat.last_message.timestamp.strftime('%m/%d/%Y')
-                    all_chats.append(new_chat)
+                    
                 new_chat.time = new_chat.last_message.timestamp
+                all_chats.append(new_chat)
             return all_chats
         else:
             return []
@@ -106,7 +108,7 @@ class Chat:
         for ind in range(0,size): 
             min_index = ind
             for j in array[0:min_index+1]: 
-                if array[min_index+1].time < j.time:
+                if array[min_index+1].time2 < j.time2:
                     x= array.pop(min_index+1)
                     array.insert(min_index,x)
                     min_index = min_index -1
