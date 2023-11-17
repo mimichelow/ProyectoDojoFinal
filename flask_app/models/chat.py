@@ -4,6 +4,7 @@ from flask_app.config.mysqlconnection import connectToMySQL
 from datetime import datetime
 from flask_app.models import user
 from flask_app.models import message
+from flask_app.models import reaction
 
 
 class Chat:

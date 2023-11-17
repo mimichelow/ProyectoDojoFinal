@@ -8,6 +8,7 @@ import re
 
 from flask_app.models import message
 from flask_app.models import chat
+from flask_app.models import reaction
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 NAME_REGEX= re.compile(r'[a-zA-Z]+$') 
