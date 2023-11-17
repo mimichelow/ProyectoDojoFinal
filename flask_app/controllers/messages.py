@@ -2,6 +2,7 @@ from flask_app import app
 from flask import session, redirect, url_for, flash, render_template,jsonify,request
 from flask_app.models.chat import Chat 
 from flask_app.models.message import Message 
+from datetime import datetime
 
 @app.route('/messages')
 def users():
