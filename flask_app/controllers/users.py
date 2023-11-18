@@ -5,6 +5,8 @@ from flask_app.models.user import User
 from flask import request
 from werkzeug.utils import secure_filename
 import os
+from deepface import DeepFace
+
 app.config['UPLOAD_FOLDER'] = './flask_app/static/uploads'
 
 bcrypt = Bcrypt(app)
@@ -43,7 +45,11 @@ def profile():
     user = User.get_user_by_id(session['id'])
     return render_template('edit_profile.html',user=user)
 
-
+def create_face_embeddings(user_id, img):
+    # toma la imagen de caras, y guarda los embeddings de la primera
+    embeddings = DeepFace.represent(img)
+    User.store_embeddings(user_id, embeddings[0])
+    
 @app.route('/edit_profile', methods=['POST'])
 def edit_profile():
     if not User.validate_entry2(request.form):
@@ -55,17 +61,43 @@ def edit_profile():
             'id':session['id']
             }
     profile_picture = request.files.get('profilePicture')
+    
+    face_recognition_image = request.files.get('faceValidation')
+    if face_recognition_image:
+        file_path = face_recognition_image.filename
+        create_face_embeddings(session['id'],file_path)
+        os.remove(file_path)
+        
+    
     if profile_picture:
         filename = secure_filename(profile_picture.filename)
         profile_picture.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         data['picture']=filename
+    
     else:
         data['picture']='user.webp'
     User.update(data)
     return redirect('/user/profile')
 
 
+@app.route("/face/login", methods=["POST"])
+def facial_login():
+    login_image = request.files.get('loginImage')
+    if login_image:
+        img_path = secure_filename(login_image.filename)
+        login_image.save(os.path.join(app.config['UPLOAD_FOLDER'], img_path))
+        embeddings = DeepFace.represent(img_path)
+        embeddings = embeddings.tobytes()
+        user_id=User.check_facial_login(embeddings)
+        os.remove(img_path)
+        if user_id:
+            session['id']=user_id
+            return redirect(url_for('chats_dashboard'))
+        else:
+            flash("That face doesn't belong to any user.")
+            return redirect(url_for('index'))
 
+    
 @app.route('/signup', methods=['POST'])
 def signup():
     if not User.validate_entry(request.form):

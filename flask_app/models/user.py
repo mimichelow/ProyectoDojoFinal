@@ -2,12 +2,13 @@ from flask_app import app
 from flask_bcrypt import Bcrypt
 from flask import render_template, redirect,request,session,flash,url_for
 from flask_app.config.mysqlconnection import connectToMySQL
-
+from deepface import DeepFace
 
 import re
 
 from flask_app.models import message
 from flask_app.models import chat
+import numpy as  np
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 NAME_REGEX= re.compile(r'[a-zA-Z]+$') 
@@ -47,7 +48,24 @@ class User:
     def create_login(cls, data):
         query = 'INSERT INTO logins (pwd, users_id) VALUES (%(pswrd)s, %(user_id)s);'
         return connectToMySQL().query_db(query, data)
-
+    
+    @classmethod
+    def store_embeddings(cls,user_id,embeddings):
+        query = 'UPDATE logins SET embeddings = %(embeddings)s WHERE users_id = %(user_id)s;'
+        data = {'embeddings': embeddings.tobytes(), 'user_id': user_id}
+        return connectToMySQL().query_db(query, data)
+    
+    @classmethod
+    def check_facial_login(cls, embedding):
+        query = 'SELECT * FROM logins;'
+        results = connectToMySQL().query_db(query)
+        for user in results:
+            user_embedding = np.frombuffer(user['embedding'], dtype='float32')
+            cosine_similarity = np.dot(user_embedding, embedding) / (np.linalg.norm(user_embedding) * np.linalg.norm(embedding))
+            if cosine_similarity > 0.90:
+                return user['id']
+        return None
+    
     @classmethod
     def save(cls,data):
         data['nick'] = data['fname'][0:1] + data['lname'] 
