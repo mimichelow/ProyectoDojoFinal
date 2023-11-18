@@ -3,12 +3,10 @@ from flask_bcrypt import Bcrypt
 from flask import render_template, redirect,request,session,flash,url_for
 from flask_app.config.mysqlconnection import connectToMySQL
 from deepface import DeepFace
-
+from datetime import datetime
 import re
-
 from flask_app.models import message
 from flask_app.models import chat
-import numpy as  np
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 NAME_REGEX= re.compile(r'[a-zA-Z]+$') 
@@ -22,6 +20,7 @@ class User:
         self.nick = data['nick']
         self.email = data['email']
         self.picture = data['picture']
+        self.dark_mode="NO"
     
     @classmethod
     def get_user_by_id(cls, id):
@@ -32,6 +31,17 @@ class User:
             return cls(result[0])
         else:
             return None
+
+    @classmethod
+    def get_user_by_email(cls, email):
+        query = 'SELECT * FROM users WHERE email = %(email)s;'
+        data = {'email': email}
+        result = connectToMySQL().query_db(query, data)
+        if result:
+            return cls(result[0])
+        else:
+            return None
+
 
     @classmethod
     def check_login(cls, email, pswrd):

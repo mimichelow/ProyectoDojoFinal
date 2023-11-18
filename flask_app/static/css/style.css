@@ -8,14 +8,16 @@ body{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 .chat-box{
-
     border-color:#5B2F91 !important;
 }
 .chat-box:hover{
-    background-color: #cfcdcd;
+    border-color:#F99417 !important;
 }
+
+
 .box{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height:40rem;
 }
 .sender-img{
     width: 70px;
