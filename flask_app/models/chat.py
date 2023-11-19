@@ -47,7 +47,7 @@ class Chat:
     
     @classmethod
     def get_all_by_user(cls, data):
-        query = 'SELECT * FROM chats as t1 left join users as t3 on t1.user1_id=t3.id left join users as t4 on t1.user2_id=t4.id left join  ( SELECT m.* FROM messages m JOIN (SELECT chat_id, MAX(timestamp) AS latest_timestamp FROM messages GROUP BY chat_id) latest_messages ON m.chat_id = latest_messages.chat_id AND m.timestamp = latest_messages.latest_timestamp ) as t2 on t1.id=t2.chat_id WHERE t1.user1_id = %(user_id)s OR t1.user2_id = %(user_id)s;'
+        query = 'SELECT * FROM chats as t1 left join users as t3 on t1.user1_id=t3.id left join users as t4 on t1.user2_id=t4.id left join  ( SELECT m.id,m.content,m.timestamp,m.chat_id,m.user_id FROM messages m JOIN (SELECT chat_id, MAX(timestamp) AS latest_timestamp FROM messages GROUP BY chat_id) latest_messages ON m.chat_id = latest_messages.chat_id AND m.timestamp = latest_messages.latest_timestamp ) as t2 on t1.id=t2.chat_id left join ( SELECT chat_id,sum(seen) as seen  FROM messages where user_id!=%(user_id)s GROUP BY chat_id) as t5 on t2.chat_id=t5.chat_id WHERE t1.user1_id = %(user_id)s OR t1.user2_id = %(user_id)s;'
         results = connectToMySQL().query_db(query, data)
         all_chats = []
         if results:
@@ -73,10 +73,13 @@ class Chat:
                     x = new_chat.user1_id
                     new_chat.user1_id = new_chat.user2_id
                     new_chat.user2_id = x
+                if chat['seen'] is None:
+                    chat['seen'] = 0
                 message_data = {
                 'content' : chat['content'],
                 'timestamp' : chat['timestamp'],
-                'chat_id' : chat['chat_id']
+                'chat_id' : chat['chat_id'],
+                'seen' : chat['seen']
                 }
                 new_chat.last_message = message.Message(message_data)
                 new_chat.time2 = new_chat.last_message.timestamp

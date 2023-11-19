@@ -11,6 +11,7 @@ class Message:
         self.content = data['content']
         self.timestamp = data['timestamp']
         self.chat_id = data['chat_id']
+        self.seen = data['seen']
         self.user_id = session['id']
         
     @classmethod
@@ -26,7 +27,7 @@ class Message:
         
     @classmethod
     def save(cls,data):
-        query = 'INSERT INTO messages (content, timestamp, chat_id,user_id) VALUES (%(content)s, now(), %(chat_id)s,%(user_id)s);'
+        query = 'INSERT INTO messages (content, timestamp, chat_id,user_id,seen) VALUES (%(content)s, now(), %(chat_id)s,%(user_id)s,1);'
         return connectToMySQL().query_db(query, data)
     
     @classmethod
@@ -34,3 +35,8 @@ class Message:
         query = "SELECT * FROM messages ORDER BY timestamp DESC LIMIT 1;"
         results = connectToMySQL().query_db(query)
         return results
+    
+    @classmethod
+    def update_seen(cls,data):
+        query = 'UPDATE messages SET seen = 0  where user_id!=%(user_id)s and chat_id=%(chat_id)s;'
+        return connectToMySQL().query_db(query, data)

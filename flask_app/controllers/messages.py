@@ -7,7 +7,8 @@ from datetime import datetime
 @app.route('/messages')
 def users():
     data = {'id': session['chat-id']}
-    return jsonify(Message.get_all_by_chat_id(data))
+    x = Message.get_all_by_chat_id(data)
+    return jsonify(x)
 
 @app.route('/new_message' , methods=['GET', 'POST'])
 def new_message():

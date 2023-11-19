@@ -28,6 +28,7 @@ def view_chat(id):
     session['chat-id'] = id
     if chat.user2_id.id == session['id']:
         chat.user1_id, chat.user2_id = chat.user2_id, chat.user1_id
+    Message.update_seen({'user_id':session['id'],'chat_id':id})
     return render_template('chat_view.html',chat_id=id,chat=chat)
 
 @app.route('/create_chat', methods=['POST'])

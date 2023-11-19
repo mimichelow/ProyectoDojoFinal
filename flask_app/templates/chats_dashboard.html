@@ -83,7 +83,11 @@
                 <p class="fw-bold fs-5 ">{{chat.user2_id.fname}} {{chat.user2_id.lname}}</p>
                 <div class="d-flex justify-content-between"><p >{{chat.last_message.content}} </p> <p >{{chat.last_message.timestamp}}</p></div>
             </div>
-            <p class="rounded-circle col-1 text-center fs-5 pt-1  " style="width:40px;height:40px;background-color:#F99417; color:white" >1</p>
+            {%if chat.last_message.seen!=0%}
+            <p class="rounded-circle col-1 text-center fs-5 pt-1  " style="width:40px;height:40px;background-color:#F99417; color:white" >{{chat.last_message.seen}}</p>
+            {%else%}
+            <p class="rounded-circle col-1 text-center fs-5 pt-1  " style="width:40px;height:40px; color:white" ></p>
+            {%endif%}
         </div>
         </a>
         {%endfor%}
