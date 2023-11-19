@@ -65,7 +65,6 @@ setInterval(getUsers, 500);
 function toggleReaction(icon) {
     var message_id = icon.dataset.id;
     // Make an AJAX request to the server
-    // console.log(message_id);
     fetch('http://127.0.0.1:5000/new_reaction', {
         method: 'POST',
         headers: {
@@ -81,7 +80,7 @@ function toggleReaction(icon) {
     .then(data => {
         // Handle the response data
         getUsers();
-        console.log(data);
+
     })
     .catch(error => {
         console.error('Error:', error);
@@ -125,7 +124,6 @@ var message = document.getElementById('message');
             e.preventDefault();
             // crea el objeto FormData desde JavaScript y envíalo a través de una solicitud post fetch
             var form = new FormData(message);
-            console.log(form);
             // así es como configuramos una solicitud post y enviamos los datos del formulario
             fetch("http://localhost:5000/new_message", { method :'POST', body : form})
             .then( response => response.json()
@@ -133,7 +131,6 @@ var message = document.getElementById('message');
             .then(data => {
                 eraseForm();// After the POST request is complete, call getUsers to update the user list
                 getUsers();
-                console.log(data);
             })
             .catch(error => {
                 console.error('Error:', error);

@@ -125,7 +125,6 @@ def signup():
 def darkMode():
     id=int(session['id'])
     result=User.getDarkMode(id)
-    print(result)
     return jsonify(result[0])
 
 @app.route ('/dark_mode_change/<mode>', methods=['GET', 'POST'])

@@ -86,7 +86,6 @@ class Chat:
                 if new_chat.last_message.timestamp != None:
                     date_now=date.today()
                     if new_chat.last_message.timestamp.month==date_now.month and new_chat.last_message.timestamp.day==date_now.day and new_chat.last_message.timestamp.year==date_now.year:
-                        print('IM AM IN')
                         new_chat.last_message.timestamp = new_chat.last_message.timestamp.strftime('%H:%M')
                     # elif same_week(new_chat.last_message.timestamp):
                     #     new_chat.last_message.timestamp =new_chat.last_message.timestamp.strftime('%A') 
@@ -99,10 +98,16 @@ class Chat:
         else:
             return []
     
+    @classmethod
+    def get_all_by_user_json(cls, data):
+        query = 'SELECT *,%(user_id)s as user_dash  FROM chats as t1 left join users as t3 on t1.user1_id=t3.id left join users as t4 on t1.user2_id=t4.id left join  ( SELECT m.id,m.content,m.timestamp,m.chat_id,m.user_id FROM messages m JOIN (SELECT chat_id, MAX(timestamp) AS latest_timestamp FROM messages GROUP BY chat_id) latest_messages ON m.chat_id = latest_messages.chat_id AND m.timestamp = latest_messages.latest_timestamp ) as t2 on t1.id=t2.chat_id left join ( SELECT chat_id,sum(seen) as seen  FROM messages where user_id!=%(user_id)s GROUP BY chat_id) as t5 on t2.chat_id=t5.chat_id WHERE t1.user1_id = %(user_id)s OR t1.user2_id = %(user_id)s order by timestamp desc;'
+        results = connectToMySQL().query_db(query, data)
+        return results
+
+
     def save(data):
         query = 'INSERT INTO chats (user1_id,user2_id,created_at,updated_at) VALUES (%(user1_id)s, %(user2_id)s,now(),now());'
         result=connectToMySQL().query_db(query, data)
-        print("SAVE RESULT", result)
         return result
     
     @staticmethod

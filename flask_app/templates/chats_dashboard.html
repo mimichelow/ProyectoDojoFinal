@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="../static/js/dark_mode.js" async></script>
     <script src="../static/js/modal.js" ></script>
+    <script src="../static/js/scripts_dashboard.js" async></script>
 
 </head>
 <body data-bs-theme="light">
@@ -39,15 +40,7 @@
     </nav>
     <h1 class="text-center mt-4">Welcome <span style="color:#F99417;">{{session.fname}}</span>!</h1>
     <div class="container text-center">
-        {% with messages = get_flashed_messages() %}  <!-- declara una variable llamada mensajes-->
-        {% if messages %}<!-- comprobar si hay algún mensaje -->
-            {% for message in messages %}<!-- recorrer los mensajes -->
-                {% if message[1]==1 %}
-                <p class=" text-light rounded m-1" style="background-color:#F99417;">{{message[0]}}</p>      
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-        {% endwith %}
+
     </div>
     <div class="container-sm col-9 text-end"><button type="button" class="btn btn-primary border-0" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color:#5B2F91; color:#EEEEEE;">New Chat</button></div>
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -59,6 +52,13 @@
             </div>
             <form action="{{url_for('create_chat')}}" method="post">
                 <div class="modal-body">
+                    {% with messages = get_flashed_messages() %}  <!-- declara una variable llamada mensajes-->
+                    {% if messages %}<!-- comprobar si hay algún mensaje -->
+                        {% for message in messages %}<!-- recorrer los mensajes -->
+                            <p class=" text-light rounded m-1" style="background-color:#F99417;">{{message}}</p>      
+                        {% endfor %}
+                    {% endif %}
+                    {% endwith %}
                     <p>Input the email of the person you would like to start a chat with:</p>
                         <label for="email" class="form-label mt-2">Email:</label>
                         <input name="email" class="form-control" type="email">
@@ -72,7 +72,7 @@
             </div>
         </div>
     </div>
-    <div class="container col-5 rounded bg-secondary-subtle mt-4 p-4 box overflow-y-auto">
+    <div class="container col-5 rounded bg-secondary-subtle mt-4 p-4 box overflow-y-auto" id="chats_history">
         {%for chat in all_chats %}
         <a href="{{url_for('view_chat',id=chat.id)}}" class="text-reset text-decoration-none">
         <div class="rounded col-11 chat-box container border border-2 mt-4 d-flex align-items-center justify-content-between">
