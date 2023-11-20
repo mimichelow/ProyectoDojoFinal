@@ -59,6 +59,7 @@ CREATE TABLE `logins` (
   `id` int NOT NULL AUTO_INCREMENT,
   `pwd` varchar(255) DEFAULT NULL,
   `users_id` int NOT NULL,
+  `embeddings` JSON DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_logins_users_idx` (`users_id`),
   CONSTRAINT `fk_logins_users` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`)

@@ -5,6 +5,8 @@ from flask_app.models.user import User
 from flask import request
 from werkzeug.utils import secure_filename
 import os
+from deepface import DeepFace
+
 app.config['UPLOAD_FOLDER'] = './flask_app/static/uploads'
 
 bcrypt = Bcrypt(app)
@@ -46,7 +48,11 @@ def profile():
 def create_face_embeddings(user_id, img):
     # toma la imagen de caras, y guarda los embeddings de la primera
     embeddings = DeepFace.represent(img)
-    User.store_embeddings(user_id, embeddings[0])
+    if len(embeddings) == 1:
+        User.store_embeddings(user_id, embeddings[0])
+    else:
+        return None
+
     
 @app.route('/edit_profile', methods=['POST'])
 def edit_profile():
@@ -62,8 +68,10 @@ def edit_profile():
     
     face_recognition_image = request.files.get('faceValidation')
     if face_recognition_image:
-        file_path = face_recognition_image.filename
-        create_face_embeddings(session['id'],file_path)
+        filename = secure_filename(face_recognition_image.filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        face_recognition_image.save(file_path)
+        create_face_embeddings(session['id'], file_path)
         os.remove(file_path)
         
     
@@ -83,17 +91,31 @@ def facial_login():
     login_image = request.files.get('loginImage')
     if login_image:
         img_path = secure_filename(login_image.filename)
-        login_image.save(os.path.join(app.config['UPLOAD_FOLDER'], img_path))
-        embeddings = DeepFace.represent(img_path)
-        embeddings = embeddings.tobytes()
-        user_id=User.check_facial_login(embeddings)
-        os.remove(img_path)
+        login_image_path = os.path.join(app.config['UPLOAD_FOLDER'], img_path)
+        
+        login_image.save(login_image_path)
+        
+        embeddings = DeepFace.represent(login_image_path)
+        if len(embeddings) != 1:
+            flash("The picture contains too many faces.")
+            return redirect(url_for('index'))
+        embeddings = embeddings[0]['embedding']
+        
+        user_id = User.check_facial_login(embeddings)
+        os.remove(login_image_path)
         if user_id:
-            session['id']=user_id
+            user= User.get_user_by_id(user_id)
+            session['id']= user.id
+            session['fname'] = user.fname
+            session['lname'] = user.lname
             return redirect(url_for('chats_dashboard'))
         else:
             flash("That face doesn't belong to any user.")
             return redirect(url_for('index'))
+
+    # Add a return statement for cases where login_image is None
+    flash("No image provided for facial login.")
+    return redirect(url_for('index'))
 
     
 @app.route('/signup', methods=['POST'])

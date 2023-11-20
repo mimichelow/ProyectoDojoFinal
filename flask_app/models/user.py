@@ -7,6 +7,9 @@ from datetime import datetime
 import re
 from flask_app.models import message
 from flask_app.models import chat
+import numpy as np
+import json
+
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 NAME_REGEX= re.compile(r'[a-zA-Z]+$') 
@@ -60,20 +63,23 @@ class User:
         return connectToMySQL().query_db(query, data)
     
     @classmethod
-    def store_embeddings(cls,user_id,embeddings):
+    def store_embeddings(cls, user_id, embeddings):
+        embeddings_json = json.dumps(embeddings)
         query = 'UPDATE logins SET embeddings = %(embeddings)s WHERE users_id = %(user_id)s;'
-        data = {'embeddings': embeddings.tobytes(), 'user_id': user_id}
+        data = {'embeddings': embeddings_json, 'user_id': user_id}
         return connectToMySQL().query_db(query, data)
     
     @classmethod
     def check_facial_login(cls, embedding):
-        query = 'SELECT * FROM logins;'
+        query = 'SELECT users_id, embeddings FROM logins;'
         results = connectToMySQL().query_db(query)
         for user in results:
-            user_embedding = np.frombuffer(user['embedding'], dtype='float32')
-            cosine_similarity = np.dot(user_embedding, embedding) / (np.linalg.norm(user_embedding) * np.linalg.norm(embedding))
-            if cosine_similarity > 0.90:
-                return user['id']
+            if user['embeddings']:
+                user_embedding = json.loads(user['embeddings'])
+                user_embedding = user_embedding['embedding']
+                cosine_similarity = np.dot(user_embedding, embedding) / (np.linalg.norm(user_embedding) * np.linalg.norm(embedding))
+                if cosine_similarity > 0.60:
+                    return user['users_id']
         return None
     
     @classmethod

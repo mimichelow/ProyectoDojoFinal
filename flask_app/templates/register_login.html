@@ -92,9 +92,9 @@
                             <input class="btn  mt-4 mb-4" type="submit" value="Login" style="background-color:#5B2F91; color:#EEEEEE;">
                         </div>
                     </form>
-                    <form action="{{url_for('facial_login')}}" method="post">
-                        <label for="loginImage" class="form-label mt-2">Upload Image:</label>
-                        <input name="loginImage" class="form-control" type="file" id="loginImage">
+                    <form action="{{url_for('facial_login')}}" method="post" enctype="multipart/form-data">
+                        <label for="loginImage" class="form-label mt-2">Log in using your picture:</label>
+                        <input name="loginImage" class="form-control" type="file" id="loginImage" accept="image/*">
                         <div class="d-grid gap-2 col-8 mx-auto">
                             <input class="btn mt-4 mb-4" type="submit" value="Login using a picture" style="background-color:#5B2F91; color:#EEEEEE;">
                         </div>
