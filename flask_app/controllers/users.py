@@ -97,7 +97,7 @@ def facial_login():
         
         embeddings = DeepFace.represent(login_image_path)
         if len(embeddings) != 1:
-            flash("The picture contains too many faces.")
+            flash(["The picture contains too many faces.",1])
             return redirect(url_for('index'))
         embeddings = embeddings[0]['embedding']
         
@@ -110,11 +110,12 @@ def facial_login():
             session['lname'] = user.lname
             return redirect(url_for('chats_dashboard'))
         else:
-            flash("That face doesn't belong to any user.")
+            
+            flash(["That face doesn't belong to any user.",1])
             return redirect(url_for('index'))
 
     # Add a return statement for cases where login_image is None
-    flash("No image provided for facial login.")
+    flash(["No image provided for facial login.",1])
     return redirect(url_for('index'))
 
     
