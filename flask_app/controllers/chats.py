@@ -49,7 +49,7 @@ def view_chat(id):
 def create_chat():
     reciever=User.get_user_by_email(request.form['email'])
     if reciever is None:
-        flash("The email you entered is not registered in our database")
+        flash("The email entered is not registered in our database")
         return redirect(url_for('chats_dashboard'))
     data={
     'user1_id':session['id'],

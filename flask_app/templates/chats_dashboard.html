@@ -52,13 +52,6 @@
             </div>
             <form action="{{url_for('create_chat')}}" method="post">
                 <div class="modal-body">
-                    {% with messages = get_flashed_messages() %}  <!-- declara una variable llamada mensajes-->
-                    {% if messages %}<!-- comprobar si hay algún mensaje -->
-                        {% for message in messages %}<!-- recorrer los mensajes -->
-                            <p class=" text-light rounded m-1" style="background-color:#F99417;">{{message}}</p>      
-                        {% endfor %}
-                    {% endif %}
-                    {% endwith %}
                     <p>Input the email of the person you would like to start a chat with:</p>
                         <label for="email" class="form-label mt-2">Email:</label>
                         <input name="email" class="form-control" type="email">
@@ -72,6 +65,15 @@
             </div>
         </div>
     </div>
+    {% with messages = get_flashed_messages() %}  <!-- declara una variable llamada mensajes-->
+                    {% if messages %}<!-- comprobar si hay algún mensaje -->
+                        {% for message in messages %}<!-- recorrer los mensajes -->
+                        <div class="d-flex justify-content-center">
+                            <p class=" text-light col-3 rounded m-1 text-center" style="background-color:#F99417;">{{message}}</p>    
+                        </div>  
+                        {% endfor %}
+                    {% endif %}
+                    {% endwith %}
     <div class="container col-5 rounded bg-secondary-subtle mt-4 p-4 box overflow-y-auto" id="chats_history">
         {%for chat in all_chats %}
         <a href="{{url_for('view_chat',id=chat.id)}}" class="text-reset text-decoration-none">
