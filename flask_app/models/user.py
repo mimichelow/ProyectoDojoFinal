@@ -78,7 +78,7 @@ class User:
                 user_embedding = json.loads(user['embeddings'])
                 user_embedding = user_embedding['embedding']
                 cosine_similarity = np.dot(user_embedding, embedding) / (np.linalg.norm(user_embedding) * np.linalg.norm(embedding))
-                if cosine_similarity > 0.60:
+                if cosine_similarity > 0.70:
                     return user['users_id']
         return None
     
